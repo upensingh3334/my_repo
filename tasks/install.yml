@@ -1,0 +1,6 @@
+---
+- name: installing the required package
+  yum:
+    name: httpd
+    state: installed
+...

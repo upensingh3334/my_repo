@@ -1,0 +1,32 @@
+---
+- name: Installin and configuring apache server
+  hosts: all
+  become: true
+  tasks:
+     - name: installing the required package
+       yum:
+          name: httpd
+          state: installed
+     - name: starting apache services
+       service: 
+          name: httpd
+          state: started
+          enabled: true
+     - name: Configuring httpd
+       copy:
+         content: "this is test html page"
+         dest: /var/www/html/index.html
+     - name: restarting apache service
+       service: 
+           name: httpd
+           state: restarted
+     - name: allowing access using firewall
+       firewalld: 
+           service: http
+           state: enabled
+           permanent: yes
+     - name: reload firewalld
+       service: 
+           name: firewalld
+           state: reloaded
+...   

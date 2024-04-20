@@ -1,0 +1,16 @@
+
+---
+- name: Configuring httpd
+  template:
+       src: templates/server_hostname.j2
+       dest: /var/www/html/index.html
+- name: allowing access using firewall
+  firewalld: 
+       service: http
+       state: enabled
+       permanent: yes
+- name: reload firewalld
+  service: 
+       name: firewalld
+       state: reloaded
+...   
